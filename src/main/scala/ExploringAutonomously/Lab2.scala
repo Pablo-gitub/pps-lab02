@@ -77,6 +77,28 @@ object Lab2 extends App:
   println(isOdd(3)) //true
   println(isOdd(2)) //false
 
-  val p1: Int =>Int=>Int=>Boolean = (x:Int)=>(y:Int) =>(z: Int) => x<=y && y==z
+  val p1: Int =>Int=>Int=>Boolean = (x:Int) => (y:Int) => (z: Int) => x<=y && y==z
+  val p2: (Int,Int,Int)=>Boolean = (x,y,z) => x<=y && y==z
+  def p3(x: Int)(y: Int)(z: Int): Boolean = x<=y && y==z
+  def p4(x:Int, y:Int, z:Int):Boolean = x<=y && y==z
 
+  // Using the curried function value p1
+  println("curried function value p1")
+  println(p1(1)(2)(2)) // Expected: true, because 1 <= 2 and 2 == 2
+  println(p1(3)(2)(2)) // Expected: false, because 3 <= 2 is false
+
+  // Using the non-curried function value p2
+  println("non-curried function value p2")
+  println(p2(1, 2, 2)) // Expected: true
+  println(p2(3, 2, 2)) // Expected: false
+
+  // Using the curried method p3
+  println("curried method p3")
+  println(p3(1)(2)(2)) // Expected: true
+  println(p3(3)(2)(2)) // Expected: false
+
+  // Using the non-curried method p4
+  println("non-curried method p4")
+  println(p4(1, 2, 2)) // Expected: true
+  println(p4(3, 2, 2)) // Expected: false
 
