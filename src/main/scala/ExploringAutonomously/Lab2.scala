@@ -105,9 +105,14 @@ object Lab2 extends App:
   private def compose(f: Int => Int, g: Int => Int): Int => Int = x => f(g(x))
   println(compose(_ - 1, _ * 2)(5)) // 9
 
+  val f: Double=>Double = (x: Double) => x-1
   private def composeGeneric[X](f: X => X, g: X => X): X => X = x => f(g(x))
   //The only constraint imposed here is that both functions must be endofunctions
   // on the same type X—that is, they both have the same domain and codomain (X).
+  println(composeGeneric(f(_), _ * 2)(5)) // 9.0
 
+  val g: Double => String = x => if(x>=0) "Positive" else "Negative"
   private def composeMoreGeneric[A, B, C](f: B => C, g: A => B): A => C = x => f(g(x))
-// The only constraint imposed here is that the codomain of g (B) must equal the domain of f (B).
+  // The only constraint imposed here is that the codomain of g (B) must equal the domain of f (B).
+  println(composeMoreGeneric(g(_),f(_))(5)) //Positive
+  println(composeMoreGeneric(g(_),f(_))(0)) // Negative
