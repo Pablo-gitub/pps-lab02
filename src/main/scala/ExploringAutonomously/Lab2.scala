@@ -124,9 +124,28 @@ object Lab2 extends App:
     (a: Int)    => a * 2
   )(3)) //6!
 
-  def compseThreeWithCompose[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D = composeMoreGeneric(f, composeMoreGeneric(g,h))
-  println(compseThreeWithCompose(
+  private def composeThreeWithCompose[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D = composeMoreGeneric(f, composeMoreGeneric(g,h))
+  println(composeThreeWithCompose(
     (s: String) => s + "!",
     (i: Int) => i.toString,
     (a: Int) => a * 2
   )(3)) //6!
+
+  private def power(base: Double, exponent: Int): Double = exponent match
+    case 0 => 1
+    case exponent if exponent > 0 => base * power(base, exponent -1)
+    //case exponent if exponent < 0 => power(base, exponent +1) / base
+
+  private def power2(base: Double, exponent: Int): Double =
+    @annotation.tailrec
+    def _power(exponent: Int, acc: Double): Double = exponent match
+      case 0 => acc
+      case exponent if(exponent>0) => _power(exponent-1, acc*base)
+      //case exponent if exponent < 0 => _power(exponent + 1, acc / base)
+    _power(exponent,1)
+
+  println(power(3,3))
+  //println(power(3,-3))
+  println("tail")
+  println(power2(3,3))
+  //println(power2(3,-3))
