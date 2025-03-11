@@ -161,9 +161,9 @@ object Lab2 extends App:
   println(reverseNumber(12345)) //54321
 
   enum Expr:
-    private case Literal(value: Int) // a numeric constant
-    private case Add(first: Expr, second: Expr) // addition of two expressions
-    private case Multiply(first: Expr, second: Expr) // multiplication of two expressions
+    case Literal(value: Int) // a numeric constant
+    case Add(first: Expr, second: Expr) // addition of two expressions
+    case Multiply(first: Expr, second: Expr) // multiplication of two expressions
 
   object Expr:
     def evaluate(expr: Expr): Int = expr match
@@ -174,7 +174,10 @@ object Lab2 extends App:
     def show(expr: Expr): String = expr match
       case Literal(value) => value.toString
       case Add(first, second) => "(" + show(first) + " + " + show(second) + ")"
-      case Multiply(first, second) => "(" + show(first) + " " + show(second) + ")"
+      case Multiply(first, second) => "(" + show(first) + " * " + show(second) + ")"
 
-    
+  val expr = Expr.Add(Expr.Literal(3), Expr.Multiply(Expr.Literal(4), Expr.Literal(5)))
+
+  println("Expression: " + Expr.show(expr)) // prints: Expression: (3 + (4 * 5))
+  println("Result: " + Expr.evaluate(expr)) // prints: Result: 23
 
