@@ -149,3 +149,32 @@ object Lab2 extends App:
   println("tail")
   println(power2(3,3))
   //println(power2(3,-3))
+
+  private def reverseNumber(n: Int): Int =
+    @annotation.tailrec
+    def _reverseNumber(n: Int, acc: Int): Int = n match
+      case 0 => acc
+      case _ => _reverseNumber(n/10, acc*10+n%10)
+    _reverseNumber(n,0) // Start with the entire number and an accumulator of 0
+
+  println(reverseNumber(234)) //432
+  println(reverseNumber(12345)) //54321
+
+  enum Expr:
+    private case Literal(value: Int) // a numeric constant
+    private case Add(first: Expr, second: Expr) // addition of two expressions
+    private case Multiply(first: Expr, second: Expr) // multiplication of two expressions
+
+  object Expr:
+    def evaluate(expr: Expr): Int = expr match
+      case Literal(value) => value
+      case Add(first, second) => evaluate(first) + evaluate(second)
+      case Multiply(first, second) => evaluate(first) * evaluate(second)
+
+    def show(expr: Expr): String = expr match
+      case Literal(value) => value.toString
+      case Add(first, second) => "(" + show(first) + " + " + show(second) + ")"
+      case Multiply(first, second) => "(" + show(first) + " " + show(second) + ")"
+
+    
+
