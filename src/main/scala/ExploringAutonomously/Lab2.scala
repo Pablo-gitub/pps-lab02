@@ -116,3 +116,17 @@ object Lab2 extends App:
   // The only constraint imposed here is that the codomain of g (B) must equal the domain of f (B).
   println(composeMoreGeneric(g(_),f(_))(5)) //Positive
   println(composeMoreGeneric(g(_),f(_))(0)) // Negative
+
+  private def composeThree[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D = x => f(g(h(x)))
+  println(composeThree(
+    (s: String) => s + "!",
+    (i: Int)    => i.toString,
+    (a: Int)    => a * 2
+  )(3)) //6!
+
+  def compseThreeWithCompose[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D = composeMoreGeneric(f, composeMoreGeneric(g,h))
+  println(compseThreeWithCompose(
+    (s: String) => s + "!",
+    (i: Int) => i.toString,
+    (a: Int) => a * 2
+  )(3)) //6!
